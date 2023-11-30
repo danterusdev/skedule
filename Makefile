@@ -21,7 +21,7 @@ ifeq ($(OS),Windows_NT)
 	INC_PATH = Z:/CSCI200/include/
 	LIB_PATH = Z:/CSCI200/lib/
 
-	ARCH = 
+	ARCH =
 	RPATH =
 else
 	DEL = rm -f
@@ -43,13 +43,13 @@ else
 
 	UNAME_P := $(shell uname -p)
 	ifeq ($(UNAME_P),x86_64)
-		ARCH = 
+		ARCH =
 	endif
 	ifneq ($(filter %86,$(UNAME_P)),)
-		ARCH = 
+		ARCH =
 	endif
 	ifneq ($(filter arm%,$(UNAME_P)),)
-		ARCH = 
+		ARCH =
 	endif
 endif
 
@@ -75,8 +75,14 @@ depend:
 .PHONY: all clean depend
 
 # DEPENDENCIES
-main.o: main.cpp Calendar.h Month.h Year.h
-Calendar.o: Calendar.cpp Calendar.h Month.h Year.h
+main.o: main.cpp Calendar.h CalendarItem.h Time.h Date.h Month.h Year.h \
+ Widget.h State.h Event.h
+Calendar.o: Calendar.cpp Calendar.h CalendarItem.h Time.h Date.h Month.h \
+ Year.h Widget.h State.h
 Date.o: Date.cpp Date.h Month.h Year.h
 Month.o: Month.cpp Month.h Year.h
 Year.o: Year.cpp Year.h
+CalendarItem.o: CalendarItem.cpp CalendarItem.h Time.h Date.h Month.h \
+ Year.h
+Event.o: Event.cpp Event.h CalendarItem.h Time.h Date.h Month.h Year.h
+Time.o: Time.cpp Time.h Date.h Month.h Year.h

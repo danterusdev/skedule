@@ -10,7 +10,7 @@
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(1280, 720), "Skedule");
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(30);
 
     Calendar calendar;
 
@@ -18,7 +18,7 @@ int main() {
     rand();
 
     for (int i = 0; i < 50; i++) {
-        calendar.addItem(Event(Time(2023, 10, rand() % 30, 5, 54)));
+        calendar.addItem(new Event("whats up pog", Time(2023, 10, rand() % 30, 5, 54)));
     }
 
     State state;
@@ -52,5 +52,4 @@ int main() {
     }
 
     return 0;
-
 }

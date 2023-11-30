@@ -64,13 +64,21 @@ void Calendar::draw(sf::RenderWindow& window) const {
 
         int eventCount = 0;
         for (size_t j = 0; j < _items.size(); j++) {
-            CalendarItem item = _items.at(j);
-            if (item.getTime().dateEquals(Date(_currentMonth.getYear(), _currentMonth.getMonth(), i))) {
+            CalendarItem* item = _items.at(j);
+            if (item->getTime().dateEquals(Date(_currentMonth.getYear(), _currentMonth.getMonth(), i))) {
                 sf::RectangleShape itemRect;
                 itemRect.setFillColor(sf::Color::Red);
                 itemRect.setPosition(DAY_X + 6, DAY_Y + 30 + 20 * (float) eventCount);
                 itemRect.setSize(sf::Vector2f(DAY_SIZE - 12 - DAY_BORDER * 2, 17.5));
                 window.draw(itemRect);
+
+                sf::Text text;
+                text.setFont(font);
+                text.setString(item->getDisplayName());
+                text.setCharacterSize(12);
+                text.setFillColor(sf::Color::Black);
+                text.setPosition((int) (DAY_X + 10), DAY_Y + 30.5 + 20 * (float) eventCount);
+                window.draw(text);
 
                 eventCount++;
             }
@@ -131,6 +139,6 @@ void Calendar::setDisplayed(const Month MONTH) {
     _currentMonth = MONTH;
 }
 
-void Calendar::addItem(const CalendarItem ITEM) {
+void Calendar::addItem(CalendarItem* const ITEM) {
     _items.push_back(ITEM);
 }

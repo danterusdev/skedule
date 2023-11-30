@@ -3,9 +3,15 @@
 
 #include "CalendarItem.h"
 
+#include <string>
+
 class Event : public CalendarItem {
 public:
-    Event(const Time TIME);
+    Event(const std::string NAME, const Time TIME);
+
+    std::string getDisplayName() const override;
+private:
+    std::string _name;
 };
 
 #endif

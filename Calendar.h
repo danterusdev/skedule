@@ -18,11 +18,11 @@ public:
     virtual void handleMouseMove(State& state, sf::Event& event) override;
 
     void setDisplayed(const Month MONTH);
-    void addItem(const CalendarItem ITEM);
+    void addItem(CalendarItem* const ITEM);
     void setWindowSize(const int WIDTH, const int HEIGHT);
 private:
     Month _currentMonth;
-    std::vector<CalendarItem> _items;
+    std::vector<CalendarItem*> _items;
     int _windowWidth;
     int _windowHeight;
 };
