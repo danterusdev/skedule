@@ -1,7 +1,7 @@
 # THE NAME OF YOUR EXECUTABLE
 TARGET = Skedule
 # ALL CPP COMPILABLE IMPLEMENTATION FILES THAT MAKE UP THE PROJECT
-SRC_FILES = main.cpp Calendar.cpp Date.cpp Month.cpp Year.cpp CalendarItem.cpp Event.cpp Time.cpp
+SRC_FILES = main.cpp Calendar.cpp Date.cpp Month.cpp Year.cpp CalendarItem.cpp Event.cpp Time.cpp MenuCreateEvent.cpp MenuBlank.cpp DrawUtil.cpp Menu.cpp
 
 # NO EDITS NEEDED BELOW THIS LINE
 
