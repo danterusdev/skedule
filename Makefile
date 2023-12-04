@@ -1,7 +1,7 @@
 # THE NAME OF YOUR EXECUTABLE
 TARGET = Skedule
 # ALL CPP COMPILABLE IMPLEMENTATION FILES THAT MAKE UP THE PROJECT
-SRC_FILES = main.cpp Calendar.cpp Date.cpp Month.cpp Year.cpp CalendarItem.cpp Event.cpp Time.cpp MenuCreateEvent.cpp MenuBlank.cpp DrawUtil.cpp Menu.cpp
+SRC_FILES = main.cpp Calendar.cpp Date.cpp Month.cpp Year.cpp CalendarItem.cpp Event.cpp MenuCreateEvent.cpp MenuBlank.cpp DrawUtil.cpp Menu.cpp
 
 # NO EDITS NEEDED BELOW THIS LINE
 
@@ -61,7 +61,7 @@ $(TARGET): $(OBJECTS)
 	$(CXX) $(ARCH) -o $@ $^ $(RPATH) -L$(LIB_PATH) $(LIBS)
 
 .cpp.o:
-	$(CXX) $(CXXVERSION) $(CXXFLAGS) $(CXXFLAGS_ERRORS) $(ARCH) -o $@ -c $< -I$(INC_PATH)
+	$(CXX) $(CXXVERSION) $(CXXFLAGS) $(CXXFLAGS_DEBUG) $(CXXFLAGS_ERRORS) $(ARCH) -o $@ -c $< -I$(INC_PATH)
 
 clean:
 	$(DEL) $(TARGET) $(OBJECTS)
@@ -75,14 +75,20 @@ depend:
 .PHONY: all clean depend
 
 # DEPENDENCIES
-main.o: main.cpp Calendar.h CalendarItem.h Time.h Date.h Month.h Year.h \
+main.o: main.cpp Calendar.h CalendarItem.h Date.h Month.h Year.h Menu.h \
  Widget.h State.h Event.h
-Calendar.o: Calendar.cpp Calendar.h CalendarItem.h Time.h Date.h Month.h \
- Year.h Widget.h State.h
+Calendar.o: Calendar.cpp Calendar.h CalendarItem.h Date.h Month.h Year.h \
+ Menu.h Widget.h State.h MenuBlank.h MenuCreateEvent.h DrawUtil.h
 Date.o: Date.cpp Date.h Month.h Year.h
 Month.o: Month.cpp Month.h Year.h
 Year.o: Year.cpp Year.h
-CalendarItem.o: CalendarItem.cpp CalendarItem.h Time.h Date.h Month.h \
- Year.h
-Event.o: Event.cpp Event.h CalendarItem.h Time.h Date.h Month.h Year.h
-Time.o: Time.cpp Time.h Date.h Month.h Year.h
+CalendarItem.o: CalendarItem.cpp CalendarItem.h Date.h Month.h Year.h
+Event.o: Event.cpp Event.h CalendarItem.h Date.h Month.h Year.h
+MenuCreateEvent.o: MenuCreateEvent.cpp DrawUtil.h Event.h CalendarItem.h \
+ Date.h Month.h Year.h MenuCreateEvent.h Menu.h Calendar.h Widget.h \
+ State.h
+MenuBlank.o: MenuBlank.cpp DrawUtil.h MenuBlank.h Menu.h Calendar.h \
+ CalendarItem.h Date.h Month.h Year.h Widget.h State.h
+DrawUtil.o: DrawUtil.cpp DrawUtil.h
+Menu.o: Menu.cpp Menu.h Calendar.h CalendarItem.h Date.h Month.h Year.h \
+ Widget.h State.h

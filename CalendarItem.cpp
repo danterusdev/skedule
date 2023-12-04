@@ -1,9 +1,9 @@
 #include "CalendarItem.h"
 
-CalendarItem::CalendarItem(const Time TIME) : _time(TIME) {
+CalendarItem::CalendarItem(const Date DATE) : _date(DATE) {
     
 }
 
-Time CalendarItem::getTime() const {
-    return _time;
+Date CalendarItem::getDate() const {
+    return _date;
 }

@@ -1,6 +1,6 @@
 #include "Event.h"
 
-Event::Event(const std::string NAME, const Time TIME) : CalendarItem(TIME) {
+Event::Event(const std::string NAME, const Date DATE) : CalendarItem(DATE) {
     this->_name = NAME;
 }
 

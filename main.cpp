@@ -17,14 +17,13 @@ int main() {
     srand(time(0));
     rand();
 
-    //for (int i = 0; i < 50; i++) {
-    //    calendar.addItem(new Event("whats up pog", Time(2023, 10, rand() % 30, 5, 54)));
-    //}
-
     State state;
     state.cursorType = sf::Cursor::Arrow;
 
-    calendar.setDisplayed(Month(2023, 10));
+    std::time_t time = std::time(0);
+    std::tm* now = std::localtime(&time);
+
+    calendar.setDisplayed(Month(now->tm_year + 1900, now->tm_mon));
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {

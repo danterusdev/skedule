@@ -1,19 +1,19 @@
 #ifndef CALENDAR_ITEM_H
 #define CALENDAR_ITEM_H
 
-#include "Time.h"
+#include "Date.h"
 
 #include <string>
 
 class CalendarItem {
 public:
-    CalendarItem(const Time TIME);
+    CalendarItem(const Date TIME);
 
-    Time getTime() const;
+    Date getDate() const;
 
     virtual std::string getDisplayName() const = 0;
 private:
-    Time _time;
+    Date _date;
 };
 
 #endif

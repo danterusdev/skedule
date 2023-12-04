@@ -19,6 +19,17 @@ private:
     sf::Font* _font;
     bool _eventNameFieldSelected;
     std::string _name;
+
+    unsigned short int _year;
+    bool _eventYearFieldSelected;
+
+    unsigned short int _month;
+    bool _eventMonthFieldSelected;
+
+    unsigned short int _day;
+    bool _eventDayFieldSelected;
+
+    bool _creationError;
 };
 
 #endif

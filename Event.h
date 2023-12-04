@@ -7,7 +7,7 @@
 
 class Event : public CalendarItem {
 public:
-    Event(const std::string NAME, const Time TIME);
+    Event(const std::string NAME, const Date TIME);
 
     std::string getDisplayName() const override;
 private:

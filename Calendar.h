@@ -23,6 +23,7 @@ public:
 
     void setDisplayed(const Month MONTH);
     void addItem(CalendarItem* const ITEM);
+    void removeItem(CalendarItem* const ITEM);
     void setWindowSize(const int WIDTH, const int HEIGHT);
 
     void resetMenu();
