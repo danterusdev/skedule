@@ -34,6 +34,14 @@ private:
     int _windowHeight;
     Menu* _menu;
     sf::Font* _font;
+
+    sf::Texture* _create;
+    sf::Texture* _back;
+    sf::Texture* _forward;
+
+    bool _backButtonHovered;
+    bool _nextButtonHovered;
+    bool _createButtonHovered;
 };
 
 #endif

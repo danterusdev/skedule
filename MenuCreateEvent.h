@@ -17,18 +17,24 @@ public:
     void createEvent();
 private:
     sf::Font* _font;
-    bool _eventNameFieldSelected;
+
     std::string _name;
+    bool _eventNameFieldSelected;
+    bool _eventNameFieldHovered;
 
     unsigned short int _year;
     bool _eventYearFieldSelected;
+    bool _eventYearFieldHovered;
 
     unsigned short int _month;
     bool _eventMonthFieldSelected;
+    bool _eventMonthFieldHovered;
 
     unsigned short int _day;
     bool _eventDayFieldSelected;
+    bool _eventDayFieldHovered;
 
+    bool _createButtonHovered;
     bool _creationError;
 };
 

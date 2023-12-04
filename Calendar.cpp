@@ -12,6 +12,22 @@ Calendar::Calendar() : _currentMonth(0, 0) {
 
     _font = new sf::Font();
     _font->loadFromFile("assets/Roboto-Regular.ttf");
+
+    _back = new sf::Texture();
+    _back->loadFromFile("assets/back.png");
+    _back->setSmooth(true);
+
+    _forward = new sf::Texture();
+    _forward->loadFromFile("assets/forward.png");
+    _forward->setSmooth(true);
+
+    _create = new sf::Texture();
+    _create->loadFromFile("assets/create.png");
+    _create->setSmooth(true);
+
+    _backButtonHovered = false;
+    _nextButtonHovered = false;
+    _createButtonHovered = false;
 }
 
 void Calendar::draw(sf::RenderWindow& window) const {
@@ -24,10 +40,38 @@ void Calendar::draw(sf::RenderWindow& window) const {
     std::ostringstream stringStream;
     stringStream << _currentMonth.toString() << " " << _currentMonth.getYear();
 
-    drawRect(window, window.getSize().x / 3 + 15, 15, 30, 30, sf::Color(100, 100, 100));
+    if (_createButtonHovered) {
+        drawOutlineRect(window, window.getSize().x / 3 + 15, 15, 30, 30, sf::Color(100, 100, 100), 2, sf::Color(80, 80, 80));
+    } else {
+        drawRect(window, window.getSize().x / 3 + 15, 15, 30, 30, sf::Color(100, 100, 100));
+    }
+    sf::RectangleShape createButton;
+    createButton.setPosition(window.getSize().x / 3 + 20, 20);
+    createButton.setSize(sf::Vector2f(20, 20));
+    createButton.setTexture(_create);
+    window.draw(createButton);
 
-    drawRect(window, X_OFFSET + DAY_SIZE * 3.5f - 160 - 30, 22, 30, 30, sf::Color(100, 100, 100)); // previous button
-    drawRect(window, X_OFFSET + DAY_SIZE * 3.5f + 160, 22, 30, 30, sf::Color(100, 100, 100)); // next button
+    if (_backButtonHovered) {
+        drawOutlineRect(window, X_OFFSET + DAY_SIZE * 3.5f - 160 - 30, 22, 30, 30, sf::Color(100, 100, 100), 2, sf::Color(80, 80, 80));
+    } else {
+        drawRect(window, X_OFFSET + DAY_SIZE * 3.5f - 160 - 30, 22, 30, 30, sf::Color(100, 100, 100));
+    }
+    sf::RectangleShape backButton;
+    backButton.setPosition(X_OFFSET + DAY_SIZE * 3.5f - 160 - 25, 27);
+    backButton.setSize(sf::Vector2f(20, 20));
+    backButton.setTexture(_back);
+    window.draw(backButton);
+
+    if (_nextButtonHovered) {
+        drawOutlineRect(window, X_OFFSET + DAY_SIZE * 3.5f + 160, 22, 30, 30, sf::Color(100, 100, 100), 2, sf::Color(80, 80, 80));
+    } else {
+        drawRect(window, X_OFFSET + DAY_SIZE * 3.5f + 160, 22, 30, 30, sf::Color(100, 100, 100));
+    }
+    sf::RectangleShape forwardButton;
+    forwardButton.setPosition(X_OFFSET + DAY_SIZE * 3.5f + 165, 27);
+    forwardButton.setSize(sf::Vector2f(20, 20));
+    forwardButton.setTexture(_forward);
+    window.draw(forwardButton);
 
     drawText(window, *_font, (int) (X_OFFSET + DAY_SIZE * 3.5f), 17, true, stringStream.str(), 32, sf::Color::Black);
 
@@ -47,7 +91,7 @@ void Calendar::draw(sf::RenderWindow& window) const {
             if (item->getDate().dateEquals(Date(_currentMonth.getYear(), _currentMonth.getMonth(), i))) {
                 drawRect(window, DAY_X + 6, DAY_Y + 30 + 20 * (float) eventCount, DAY_SIZE - 12 - DAY_BORDER * 2, 17, sf::Color(150, 150, 150));
 
-                drawText(window, *_font, (int) (DAY_X + 10), DAY_Y + 30.5 + 20 * (float) eventCount, false, item->getDisplayName(), 12, sf::Color::Black);
+                drawText(window, *_font, (int) (DAY_X + 10), DAY_Y + 32 + 20 * (float) eventCount, false, item->getDisplayName(), 10, sf::Color::Black);
 
                 eventCount++;
             }
@@ -125,19 +169,26 @@ void Calendar::handleMouseMove(State& state, sf::Event& event) {
     const float X_OFFSET = (float) _windowWidth / 3 * 2 - DAY_SIZE * 3.5f;
     const float Y_OFFSET = 75;
 
+    _backButtonHovered = false;
+    _nextButtonHovered = false;
+    _createButtonHovered = false;
+
     if (event.mouseMove.x > X_OFFSET + DAY_SIZE * 3.5f + 160 && event.mouseMove.x < X_OFFSET + DAY_SIZE * 3.5f + 160 + 30 &&
             event.mouseMove.y > 22 && event.mouseMove.y < 22 + 30) {
         state.cursorType = sf::Cursor::Hand;
+        _nextButtonHovered = true;
     }
 
     if (event.mouseMove.x > X_OFFSET + DAY_SIZE * 3.5f - 160 - 30 && event.mouseMove.x < X_OFFSET + DAY_SIZE * 3.5f - 160 &&
             event.mouseMove.y > 22 && event.mouseMove.y < 22 + 30) {
         state.cursorType = sf::Cursor::Hand;
+        _backButtonHovered = true;
     }
 
     if (event.mouseMove.x > _windowWidth / 3 + 15 && event.mouseMove.x < _windowWidth / 3 + 15 + 30 &&
             event.mouseMove.y > 15 && event.mouseMove.y < 15 + 30) {
         state.cursorType = sf::Cursor::Hand;
+        _createButtonHovered = true;
     }
 
     int row = 0;

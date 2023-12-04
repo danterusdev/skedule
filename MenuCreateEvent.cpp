@@ -16,6 +16,13 @@ MenuCreateEvent::MenuCreateEvent(Calendar* const CALENDAR) : Menu(CALENDAR) {
     _day = now->tm_mday;
     _month = now->tm_mon + 1;
     _year = now->tm_year + 1900;
+
+    _eventNameFieldHovered = false;
+    _eventYearFieldHovered = false;
+    _eventMonthFieldHovered = false;
+    _eventDayFieldHovered = false;
+    _createButtonHovered = false;
+    _creationError = false;
 }
 
 void MenuCreateEvent::draw(sf::RenderWindow& window) const {
@@ -27,15 +34,20 @@ void MenuCreateEvent::draw(sf::RenderWindow& window) const {
     drawText(window, *_font, 15, 103, false, "Name:", 18, sf::Color::Black);
     if (_eventNameFieldSelected) {
         drawOutlineRect(window, 80, 100, 200, 30, sf::Color(80, 80, 80), 2, sf::Color(50, 50, 50));
+    } else if (_eventNameFieldHovered) {
+        drawOutlineRect(window, 80, 100, 200, 30, sf::Color(80, 80, 80), 2, sf::Color(65, 65, 65));
     } else {
         drawRect(window, 80, 100, 200, 30, sf::Color(80, 80, 80));
     }
     drawText(window, *_font, 85, 105, false, _name, 15, sf::Color::Black);
 
+    drawText(window, *_font, 15, 143, false, "Date:", 18, sf::Color::Black);
+
     // Event Year Input
-    drawText(window, *_font, 15, 143, false, "Year:", 18, sf::Color::Black);
     if (_eventYearFieldSelected) {
         drawOutlineRect(window, 80, 140, 50, 30, sf::Color(80, 80, 80), 2, sf::Color(50, 50, 50));
+    } else if (_eventYearFieldHovered) {
+        drawOutlineRect(window, 80, 140, 50, 30, sf::Color(80, 80, 80), 2, sf::Color(65, 65, 65));
     } else {
         drawRect(window, 80, 140, 50, 30, sf::Color(80, 80, 80));
     }
@@ -44,43 +56,47 @@ void MenuCreateEvent::draw(sf::RenderWindow& window) const {
     }
 
     // Event Month Input
-    drawText(window, *_font, 15, 183, false, "Month:", 18, sf::Color::Black);
     if (_eventMonthFieldSelected) {
-        drawOutlineRect(window, 80, 180, 50, 30, sf::Color(80, 80, 80), 2, sf::Color(50, 50, 50));
+        drawOutlineRect(window, 160, 140, 50, 30, sf::Color(80, 80, 80), 2, sf::Color(50, 50, 50));
+    } else if (_eventMonthFieldHovered) {
+        drawOutlineRect(window, 160, 140, 50, 30, sf::Color(80, 80, 80), 2, sf::Color(65, 65, 65));
     } else {
-        drawRect(window, 80, 180, 50, 30, sf::Color(80, 80, 80));
+        drawRect(window, 160, 140, 50, 30, sf::Color(80, 80, 80));
     }
     if (_month > 0) {
-        drawText(window, *_font, 85, 185, false, std::to_string(_month), 15, sf::Color::Black);
+        drawText(window, *_font, 165, 145, false, std::to_string(_month), 15, sf::Color::Black);
     }
 
     // Event Day Input
-    drawText(window, *_font, 15, 223, false, "Day:", 18, sf::Color::Black);
     if (_eventDayFieldSelected) {
-        drawOutlineRect(window, 80, 220, 50, 30, sf::Color(80, 80, 80), 2, sf::Color(50, 50, 50));
+        drawOutlineRect(window, 240, 140, 50, 30, sf::Color(80, 80, 80), 2, sf::Color(50, 50, 50));
+    } else if (_eventDayFieldHovered) {
+        drawOutlineRect(window, 240, 140, 50, 30, sf::Color(80, 80, 80), 2, sf::Color(65, 65, 65));
     } else {
-        drawRect(window, 80, 220, 50, 30, sf::Color(80, 80, 80));
+        drawRect(window, 240, 140, 50, 30, sf::Color(80, 80, 80));
     }
     if (_day > 0) {
-        drawText(window, *_font, 85, 225, false, std::to_string(_day), 15, sf::Color::Black);
+        drawText(window, *_font, 245, 145, false, std::to_string(_day), 15, sf::Color::Black);
     }
 
     // Create Button
     if (_creationError) {
-        drawOutlineRect(window, window.getSize().x / 3 - 100, window.getSize().y - 40, 90, 30, sf::Color(80, 80, 80), 1, sf::Color::Red);
+        drawOutlineRect(window, window.getSize().x / 3 - 100, 200, 90, 30, sf::Color(80, 80, 80), 2, sf::Color::Red);
+    } else if (_createButtonHovered) {
+        drawOutlineRect(window, window.getSize().x / 3 - 100, 200, 90, 30, sf::Color(80, 80, 80), 2, sf::Color(65, 65, 65));
     } else {
-        drawRect(window, window.getSize().x / 3 - 100, window.getSize().y - 40, 90, 30, sf::Color(80, 80, 80));
+        drawRect(window, window.getSize().x / 3 - 100, 200, 90, 30, sf::Color(80, 80, 80));
     }
-    drawText(window, *_font, window.getSize().x / 3 - 55, window.getSize().y - 35, true, "Create", 18, sf::Color::Black);
+    drawText(window, *_font, window.getSize().x / 3 - 55, 205, true, "Create", 18, sf::Color::Black);
 }
 
 void MenuCreateEvent::handleMouseClick(sf::Event& event) {
     _eventNameFieldSelected = event.mouseButton.x > 80 && event.mouseButton.x < 280 && event.mouseButton.y > 100 && event.mouseButton.y < 130;
     _eventYearFieldSelected = event.mouseButton.x > 80 && event.mouseButton.x < 130 && event.mouseButton.y > 140 && event.mouseButton.y < 170;
-    _eventMonthFieldSelected = event.mouseButton.x > 80 && event.mouseButton.x < 130 && event.mouseButton.y > 180 && event.mouseButton.y < 210;
-    _eventDayFieldSelected = event.mouseButton.x > 80 && event.mouseButton.x < 130 && event.mouseButton.y > 220 && event.mouseButton.y < 250;
+    _eventMonthFieldSelected = event.mouseButton.x > 160 && event.mouseButton.x < 210 && event.mouseButton.y > 140 && event.mouseButton.y < 170;
+    _eventDayFieldSelected = event.mouseButton.x > 240 && event.mouseButton.x < 290 && event.mouseButton.y > 140 && event.mouseButton.y < 170;
 
-    if (event.mouseButton.x > _windowWidth / 3 - 100 && event.mouseButton.x < _windowWidth / 3 - 10 && event.mouseButton.y > _windowHeight - 40 && event.mouseButton.y < _windowHeight - 10) {
+    if (event.mouseButton.x > _windowWidth / 3 - 100 && event.mouseButton.x < _windowWidth / 3 - 10 && event.mouseButton.y > 200 && event.mouseButton.y < 230) {
         if (_name.empty() || _month == 0 || _day > Month(_year, _month - 1).getDayCount()) {
             _creationError = true;
         } else {
@@ -91,24 +107,35 @@ void MenuCreateEvent::handleMouseClick(sf::Event& event) {
 }
 
 void MenuCreateEvent::handleMouseMove(State& state, sf::Event& event) {
+    _eventNameFieldHovered = false;
+    _eventYearFieldHovered = false;
+    _eventMonthFieldHovered = false;
+    _eventDayFieldHovered = false;
+    _createButtonHovered = false;
+
     if (event.mouseMove.x > 80 && event.mouseMove.x < 280 && event.mouseMove.y > 100 && event.mouseMove.y < 130) {
         state.cursorType = sf::Cursor::Hand;
+        _eventNameFieldHovered = true;
     }
 
     if (event.mouseMove.x > 80 && event.mouseMove.x < 130 && event.mouseMove.y > 140 && event.mouseMove.y < 170) {
         state.cursorType = sf::Cursor::Hand;
+        _eventYearFieldHovered = true;
     }
 
-    if (event.mouseMove.x > 80 && event.mouseMove.x < 130 && event.mouseMove.y > 180 && event.mouseMove.y < 210) {
+    if (event.mouseMove.x > 160 && event.mouseMove.x < 210 && event.mouseMove.y > 140 && event.mouseMove.y < 170) {
         state.cursorType = sf::Cursor::Hand;
+        _eventMonthFieldHovered = true;
     }
 
-    if (event.mouseMove.x > 80 && event.mouseMove.x < 130 && event.mouseMove.y > 220 && event.mouseMove.y < 250) {
+    if (event.mouseMove.x > 240 && event.mouseMove.x < 290 && event.mouseMove.y > 140 && event.mouseMove.y < 170) {
         state.cursorType = sf::Cursor::Hand;
+        _eventDayFieldHovered = true;
     }
 
-    if (event.mouseMove.x > _windowWidth / 3 - 100 && event.mouseMove.x < _windowWidth / 3 - 10 && event.mouseMove.y > _windowHeight - 40 && event.mouseMove.y < _windowHeight - 10) {
+    if (event.mouseMove.x > _windowWidth / 3 - 100 && event.mouseMove.x < _windowWidth / 3 - 10 && event.mouseMove.y > 200 && event.mouseMove.y < 230) {
         state.cursorType = sf::Cursor::Hand;
+        _createButtonHovered = true;
     }
 }
 
