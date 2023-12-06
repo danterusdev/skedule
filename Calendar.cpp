@@ -255,6 +255,10 @@ void Calendar::resetMenu() {
 
 void Calendar::loadFromFile() {
     std::ifstream stream("skeduleSave");
+    if (!stream.is_open()) {
+        return;
+    }
+
     while (!stream.eof()) {
         unsigned int year;
         unsigned short int month;
