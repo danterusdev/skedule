@@ -24,6 +24,8 @@ int main() {
     std::time_t time = std::time(0);
     std::tm* now = std::localtime(&time);
 
+    calendar.setWindowSize(1280, 720);
+
     calendar.setDisplayed(Month(now->tm_year + 1900, now->tm_mon));
     while (window.isOpen()) {
         sf::Event event;
@@ -34,8 +36,6 @@ int main() {
                 calendar.handleMouseClick(event);
             } else if (event.type == sf::Event::TextEntered) {
                 calendar.handleTextEnter(event);
-            } else if (event.type == sf::Event::Resized) {
-                calendar.setWindowSize(event.size.width, event.size.height);
             } else if (event.type == sf::Event::MouseMoved) {
                 state.cursorType = sf::Cursor::Arrow;
                 calendar.handleMouseMove(state, event);
