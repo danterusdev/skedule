@@ -13,6 +13,7 @@ Month::Month(const int YEAR, const unsigned short int MONTH)
 
 int Month::getDayOfWeek() const {
     int result = 0;
+    // Uses the year 1600 as a fixed point because it unlikely anyone wants to go back before then
     for (unsigned int i = 1600; i < _year; i++) {
         result += Year(i).getDayCount();
     }
@@ -21,6 +22,7 @@ int Month::getDayOfWeek() const {
         result += Month(_year, i).getDayCount();
     }
 
+    // the + 6 is accounting for the fact that January 1st 1600 was a Saturday
     return (result + 6) % 7;
 }
 unsigned int Month::getDayCount() const {

@@ -12,6 +12,8 @@ std::string Event::getDisplayName() const {
 }
 
 void Event::saveToFile(std::ofstream& stream) const {
+    // Writes the event in the format:
+    //   YEAR MONTH DAY EVENT_NAME
     stream << _date.getYear() << " " <<
         _date.getMonth() << " " <<
         _date.getDay() << " " <<

@@ -5,9 +5,15 @@
 
 #include <string>
 
+/**
+ * Implementation of the abstract CalendarItem for an Event
+ */
 class Event : public CalendarItem {
 public:
-    Event(const std::string NAME, const Date TIME);
+    /**
+     * Costructs an event with a specific name and Date
+     */
+    Event(const std::string NAME, const Date DATE);
 
     std::string getDisplayName() const override;
 

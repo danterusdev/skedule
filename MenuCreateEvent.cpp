@@ -6,16 +6,16 @@
 
 #include <SFML/Graphics.hpp>
 
-MenuCreateEvent::MenuCreateEvent(Calendar* const CALENDAR) : Menu(CALENDAR) {
+MenuCreateEvent::MenuCreateEvent(Calendar* const P_CALENDAR) : Menu(P_CALENDAR) {
     _font = new sf::Font();
     _font->loadFromFile("assets/Roboto-Regular.ttf");
 
     std::time_t time = std::time(0);
-    std::tm* now = std::localtime(&time);
+    std::tm* pNow = std::localtime(&time);
 
-    _day = now->tm_mday;
-    _month = now->tm_mon + 1;
-    _year = now->tm_year + 1900;
+    _day = pNow->tm_mday;
+    _month = pNow->tm_mon + 1;
+    _year = pNow->tm_year + 1900;
 
     _eventNameFieldHovered = false;
     _eventYearFieldHovered = false;
@@ -96,6 +96,7 @@ void MenuCreateEvent::handleMouseClick(sf::Event& event) {
     _eventMonthFieldSelected = event.mouseButton.x > 160 && event.mouseButton.x < 210 && event.mouseButton.y > 140 && event.mouseButton.y < 170;
     _eventDayFieldSelected = event.mouseButton.x > 240 && event.mouseButton.x < 290 && event.mouseButton.y > 140 && event.mouseButton.y < 170;
 
+    // Submit button press handling
     if (event.mouseButton.x > _windowWidth / 3 - 100 && event.mouseButton.x < _windowWidth / 3 - 10 && event.mouseButton.y > 200 && event.mouseButton.y < 230) {
         if (_name.empty() || _month == 0 || _day > Month(_year, _month - 1).getDayCount()) {
             _creationError = true;
@@ -113,26 +114,31 @@ void MenuCreateEvent::handleMouseMove(State& state, sf::Event& event) {
     _eventDayFieldHovered = false;
     _createButtonHovered = false;
 
+    // Event name field mouse move handling
     if (event.mouseMove.x > 80 && event.mouseMove.x < 280 && event.mouseMove.y > 100 && event.mouseMove.y < 130) {
         state.cursorType = sf::Cursor::Hand;
         _eventNameFieldHovered = true;
     }
 
+    // Event year field mouse move handling
     if (event.mouseMove.x > 80 && event.mouseMove.x < 130 && event.mouseMove.y > 140 && event.mouseMove.y < 170) {
         state.cursorType = sf::Cursor::Hand;
         _eventYearFieldHovered = true;
     }
 
+    // Event month field mouse move handling
     if (event.mouseMove.x > 160 && event.mouseMove.x < 210 && event.mouseMove.y > 140 && event.mouseMove.y < 170) {
         state.cursorType = sf::Cursor::Hand;
         _eventMonthFieldHovered = true;
     }
 
+    // Event day field mouse move handling
     if (event.mouseMove.x > 240 && event.mouseMove.x < 290 && event.mouseMove.y > 140 && event.mouseMove.y < 170) {
         state.cursorType = sf::Cursor::Hand;
         _eventDayFieldHovered = true;
     }
 
+    // Create button mouse move handling
     if (event.mouseMove.x > _windowWidth / 3 - 100 && event.mouseMove.x < _windowWidth / 3 - 10 && event.mouseMove.y > 200 && event.mouseMove.y < 230) {
         state.cursorType = sf::Cursor::Hand;
         _createButtonHovered = true;
@@ -140,6 +146,7 @@ void MenuCreateEvent::handleMouseMove(State& state, sf::Event& event) {
 }
 
 void MenuCreateEvent::handleTextEnter(sf::Event& event) {
+    // Add to the current event name stored if that field is selected
     if (_eventNameFieldSelected) {
         if (event.text.unicode == 8) {
             if (_name.size() > 0) {
@@ -150,6 +157,7 @@ void MenuCreateEvent::handleTextEnter(sf::Event& event) {
         }
     }
 
+    // Change the current event year based on the keyboard input
     if (_eventYearFieldSelected) {
         unsigned short int previous = _year;
         if (event.text.unicode >= '0' && event.text.unicode <= '9') {
@@ -163,6 +171,7 @@ void MenuCreateEvent::handleTextEnter(sf::Event& event) {
         }
     }
 
+    // Change the current event month based on the keyboard input
     if (_eventMonthFieldSelected) {
         unsigned short int previous = _month;
         if (event.text.unicode >= '0' && event.text.unicode <= '9') {
@@ -176,6 +185,7 @@ void MenuCreateEvent::handleTextEnter(sf::Event& event) {
         }
     }
 
+    // Change the current event day based on the keyboard input
     if (_eventDayFieldSelected) {
         unsigned short int previous = _day;
         if (event.text.unicode >= '0' && event.text.unicode <= '9') {

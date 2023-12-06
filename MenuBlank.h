@@ -4,9 +4,18 @@
 #include "Menu.h"
 #include "Widget.h"
 
+/**
+ * A menu with no buttons, represents when
+ * there are no interactions for the menu
+ */
 class MenuBlank : public Menu {
 public:
-    MenuBlank(Calendar* const CALENDAR) : Menu(CALENDAR) {};
+    /**
+     * Constructs a Blank menu for the current Calendar
+     *
+     * @param P_CALENDAR the calendar parent
+     */
+    MenuBlank(Calendar* const P_CALENDAR) : Menu(P_CALENDAR) {};
 
     void draw(sf::RenderWindow& window) const override;
     void handleMouseClick(sf::Event& event) override;

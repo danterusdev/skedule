@@ -8,7 +8,7 @@ SRC_FILES = main.cpp Calendar.cpp Date.cpp Month.cpp Year.cpp CalendarItem.cpp E
 CXX = g++
 CXXFLAGS = 
 CXXFLAGS_DEBUG = -g
-CXXFLAGS_ERRORS = -Werror -Wall -Wextra -Wpedantic -pedantic-errors
+CXXFLAGS_ERRORS = -Werror -Wall -Wextra -Wpedantic -pedantic-errors -Wshadow -Wunreachable-code -Wdouble-promotion
 CXXVERSION = -std=c++17
 
 OBJECTS = $(SRC_FILES:.cpp=.o)

@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 void MenuBlank::draw(sf::RenderWindow& window) const {
+    // A blank menu
     drawRect(window, 0, 0, window.getSize().x / 3, window.getSize().y, sf::Color(120, 120, 120));
 }
 

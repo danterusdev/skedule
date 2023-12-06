@@ -4,9 +4,18 @@
 #include "Menu.h"
 #include "Widget.h"
 
+/**
+ * A menu that is displayed when the user is creating
+ * a new event
+ */
 class MenuCreateEvent : public Menu {
 public:
-    MenuCreateEvent(Calendar* const CALENDAR);
+    /** 
+     * Constructs the menu for the calendar
+     *
+     * @param P_CALENDAR the calendar parent
+     */
+    MenuCreateEvent(Calendar* const P_CALENDAR);
 
     void draw(sf::RenderWindow& window) const override;
     void handleMouseClick(sf::Event& event) override;

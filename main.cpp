@@ -1,3 +1,10 @@
+/**
+ * Final Project: Skedule
+ *
+ * This is a gui calendar app where the user can create and delete events
+ * and schedule them for a specific date and time.
+ */
+
 #include "Calendar.h"
 #include "Event.h"
 #include "State.h"
@@ -21,12 +28,13 @@ int main() {
     State state;
     state.cursorType = sf::Cursor::Arrow;
 
+    // getting the current date
     std::time_t time = std::time(0);
-    std::tm* now = std::localtime(&time);
+    std::tm* pNow = std::localtime(&time);
 
     calendar.setWindowSize(1280, 720);
 
-    calendar.setDisplayed(Month(now->tm_year + 1900, now->tm_mon));
+    calendar.setDisplayed(Month(pNow->tm_year + 1900, pNow->tm_mon));
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -37,6 +45,7 @@ int main() {
             } else if (event.type == sf::Event::TextEntered) {
                 calendar.handleTextEnter(event);
             } else if (event.type == sf::Event::MouseMoved) {
+                // Handle how the change the cursor if hovering over a button
                 state.cursorType = sf::Cursor::Arrow;
                 calendar.handleMouseMove(state, event);
 
