@@ -13,6 +13,7 @@ int main() {
     window.setFramerateLimit(30);
 
     Calendar calendar;
+    calendar.loadFromFile();
 
     srand(time(0));
     rand();

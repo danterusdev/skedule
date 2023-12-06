@@ -12,7 +12,9 @@ public:
     Date getDate() const;
 
     virtual std::string getDisplayName() const = 0;
-private:
+
+    virtual void saveToFile(std::ofstream& stream) const = 0;
+protected:
     Date _date;
 };
 

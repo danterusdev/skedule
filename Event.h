@@ -10,6 +10,8 @@ public:
     Event(const std::string NAME, const Date TIME);
 
     std::string getDisplayName() const override;
+
+    void saveToFile(std::ofstream& stream) const override;
 private:
     std::string _name;
 };

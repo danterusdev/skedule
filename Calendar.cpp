@@ -1,8 +1,11 @@
 #include "Calendar.h"
+#include "Event.h"
 #include "MenuBlank.h"
 #include "MenuCreateEvent.h"
 #include "DrawUtil.h"
 
+#include <iostream>
+#include <fstream>
 #include <sstream>
 #include <string>
 #include <SFML/Graphics.hpp>
@@ -234,6 +237,7 @@ void Calendar::setDisplayed(const Month MONTH) {
 
 void Calendar::addItem(CalendarItem* const ITEM) {
     _items.push_back(ITEM);
+    saveToFile();
 }
 
 void Calendar::removeItem(CalendarItem* const ITEM) {
@@ -242,8 +246,36 @@ void Calendar::removeItem(CalendarItem* const ITEM) {
             _items.erase(_items.begin() + i);
         }
     }
+    saveToFile();
 }
 
 void Calendar::resetMenu() {
     _menu = new MenuBlank(this);
+}
+
+void Calendar::loadFromFile() {
+    std::ifstream stream("skeduleSave");
+    while (!stream.eof()) {
+        unsigned int year;
+        unsigned short int month;
+        unsigned short int day;
+
+        stream >> year >> month >> day;
+
+        stream.get();
+
+        std::string name;
+        std::getline(stream, name);
+
+        _items.push_back(new Event(name, Date(year, month, day)));
+
+        stream.peek();
+    }
+}
+
+void Calendar::saveToFile() {
+    std::ofstream stream("skeduleSave");
+    for (size_t i = 0; i < _items.size(); i++) {
+        _items.at(i)->saveToFile(stream);
+    }
 }

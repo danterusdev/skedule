@@ -27,9 +27,13 @@ public:
     void setWindowSize(const int WIDTH, const int HEIGHT);
 
     void resetMenu();
+
+    void loadFromFile();
+    void saveToFile();
 private:
     Month _currentMonth;
     std::vector<CalendarItem*> _items;
+
     int _windowWidth;
     int _windowHeight;
     Menu* _menu;

@@ -10,3 +10,7 @@ bool Date::dateEquals(const Date& OTHER) const {
             _month == OTHER._month &&
             _day == OTHER._day;
 }
+
+unsigned short int Date::getDay() const {
+    return _day;
+}
